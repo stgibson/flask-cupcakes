@@ -4,11 +4,12 @@ from app import app
 from models import db, Cupcake
 
 # Use test database and don't clutter tests with SQL
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///cupcakes_test'
-app.config['SQLALCHEMY_ECHO'] = False
+app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql:///cupcakes_test"
+app.config["SQLALCHEMY_ECHO"] = False
 
 # Make Flask errors be real errors, rather than HTML pages with error info
-app.config['TESTING'] = True
+app.config["TESTING"] = True
+app.config["DEBUG_TB_HOST"] = ["dont-show-debug-toolbar"]
 
 db.drop_all()
 db.create_all()

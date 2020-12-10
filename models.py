@@ -29,10 +29,22 @@ class Cupcake(db.Model):
 
     image = db.Column(db.Text, nullable=False, default=default_image)
 
-    def __repr__():
+    def __repr__(self):
         """
-            For showing data in an instance
+            For showing data in instance
             rtype: str
         """
-        return f"<Cupcake id={id} flavor={flavor} size={size} rating={rating} \
-            image={image}"
+        return f"<Cupcake id={self.id} flavor={self.flavor} size={self.size} \
+            rating={self.rating} image={self.image}>"
+
+    def serialize(self):
+        """
+            Gets dict representation of instance
+        """
+        return {
+            "id": self.id,
+            "flavor": self.flavor,
+            "size": self.size,
+            "rating": self.rating,
+            "image": self. image
+        }

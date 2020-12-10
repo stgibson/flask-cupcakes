@@ -1,4 +1,5 @@
 const baseUrl = "http://127.0.0.1:5000/api/cupcakes"
+const defaultImage = "https://tinyurl.com/demo-cupcake"
 
 /**
  * Gets all cupcakes from db.
@@ -68,6 +69,8 @@ function createCupcake(event) {
 
   if (validateInput(cupcake)) {
     addCupcakeToDatabase(cupcake);
+    // set the default image of cupcake for displaying
+    cupcake.image = defaultImage;
     addCupcakeToList(cupcake);
   }
 }

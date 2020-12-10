@@ -53,6 +53,10 @@ def create_cupcake():
     rating = request.json["rating"]
     image = request.json.get("image", None)
 
+    # if image is empty string, set it to None
+    if not image:
+        image = None
+
     # add to the db
     new_cupcake = Cupcake(flavor=flavor, size=size, rating=rating, image=image)
     db.session.add(new_cupcake)

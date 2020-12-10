@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 from flask_debugtoolbar import DebugToolbarExtension
 from models import db, connect_db, Cupcake
 
@@ -11,6 +11,14 @@ app.config["SQLALCHEMY_ECHO"] = True
 debug = DebugToolbarExtension(app)
 
 connect_db(app)
+
+@app.route("/")
+def show_home_page():
+    """
+        Shows a page template with a list where cupcakes will show up and a
+        form to create a new cupcake
+    """
+    return render_template("home.html")
 
 @app.route("/api/cupcakes")
 def list_cupcakes():

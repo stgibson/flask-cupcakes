@@ -31,9 +31,14 @@ function addCupcakeToList(cupcake) {
  * Adds all cupcakes in db to cupcakes-list
  */
 async function showListOfCupcakes() {
-  const cupcakes = await getAllCupcakes();
-
-  cupcakes.forEach(cupcake => addCupcakeToList(cupcake));
+  try {
+    const cupcakes = await getAllCupcakes();
+    cupcakes.forEach(cupcake => addCupcakeToList(cupcake));
+  }
+  catch(error) {
+    alert("Could not load cupcakes")
+    return;
+  }
 }
 
 /**
@@ -68,7 +73,13 @@ function createCupcake(event) {
   cupcake.image = $("#image").val();
 
   if (validateInput(cupcake)) {
-    addCupcakeToDatabase(cupcake);
+    try {
+      addCupcakeToDatabase(cupcake);
+    }
+    catch(e) {
+      alert("Could not create cupcake");
+      return;
+    }
     // set the default image of cupcake for displaying
     cupcake.image = defaultImage;
     addCupcakeToList(cupcake);

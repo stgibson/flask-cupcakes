@@ -11,10 +11,10 @@ async function getAllCupcakes() {
 
 /**
  * Adds the contents of cupcake to the html list $cupcakesList
- * @param {Object} $cupcakesList 
  * @param {Object} cupcake 
  */
-function addCupcakeToList($cupcakesList, cupcake) {
+function addCupcakeToList(cupcake) {
+  const $cupcakesList = $("#cupcakes-list");
   const $cupcakeListItem = $(`
     <div class="col-4">
       <b>${cupcake.flavor}</b>
@@ -32,8 +32,46 @@ function addCupcakeToList($cupcakesList, cupcake) {
 async function showListOfCupcakes() {
   const cupcakes = await getAllCupcakes();
 
-  const $cupcakesList = $("#cupcakes-list");
-  cupcakes.forEach(cupcake => addCupcakeToList($cupcakesList, cupcake));
+  cupcakes.forEach(cupcake => addCupcakeToList(cupcake));
 }
 
-$(showListOfCupcakes());
+/**
+ * Makes sure user typed in valid input for creating a cupcake
+ * @param {string} cupcake
+ * @return {boolean} True if all values in cupcake are valid, false otherwise
+ */
+function validateInput(cupcake) {
+  // flavor, size, and rating inputs are required
+  if (!cupcake.flavor.trim() || !cupcake.size.trim() ||
+    !cupcake.rating.trim()) {
+    return false;
+  }
+  return true;
+}
+
+function addCupcakeToDatabase(cupcake) {
+  axios.post(baseUrl, json=cupcake);
+}
+
+/**
+ * Creates a new cupcake, adds it to the db, and appends it to the html list.
+ * @param {Object} event 
+ */
+function createCupcake(event) {
+  event.preventDefault();
+
+  const cupcake = {};
+  cupcake.flavor = $("#flavor").val();
+  cupcake.size = $("#size").val();
+  cupcake.rating = $("#rating").val();
+  cupcake.image = $("#image").val();
+
+  if (validateInput(cupcake)) {
+    addCupcakeToDatabase(cupcake);
+    addCupcakeToList(cupcake);
+  }
+}
+
+$(showListOfCupcakes);
+
+$("#add-cupcake-form").on("submit", createCupcake);

@@ -16,10 +16,12 @@ async function getAllCupcakes() {
  */
 function addCupcakeToList($cupcakesList, cupcake) {
   const $cupcakeListItem = $(`
-    <b>${cupcake.flavor}</b>
-    <div>Size: ${cupcake.size}</div>
-    <div>Rating: ${cupcake.rating}</div>
-    <img src="${cupcake.image}" alt="image of cupcake">
+    <div class="col-4">
+      <b>${cupcake.flavor}</b>
+      <div>Size: ${cupcake.size}</div>
+      <div>Rating: ${cupcake.rating}</div>
+      <img class="img-fluid mb-5" src="${cupcake.image}" alt="image of cupcake">
+    </div>
   `);
   $cupcakesList.append($cupcakeListItem);
 }
